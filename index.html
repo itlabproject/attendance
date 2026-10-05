@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trainees Attendance Management - Govt. ITI Dataganj</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Admin Login Section -->
+    <div id="loginBox" class="card-login">
+        <h2>Admin Login</h2>
+        <input type="text" id="adminUser" placeholder="Username (admin)">
+        <input type="password" id="adminPass" placeholder="Password (1234)">
+        <button onclick="login()">Login</button>
+        <p id="loginMessage"></p>
+    </div>
+
+    <!-- Main Application -->
+    <div id="mainApp" style="display:none;" class="container">
+        
+        <header>
+            <h1>Govt. I.T.I Dataganj, Budaun (U.P)<br>Trainees Cloud Biometric Attendance System</h1>
+            <button class="btn-logout" onclick="logout()">Logout</button>
+        </header>
+
+        <!-- Dashboard -->
+        <section class="dashboard">
+            <div class="card">
+                <h3>Total Trainees</h3>
+                <p id="total">0</p>
+            </div>
+            <div class="card card-present">
+                <h3>Present Today</h3>
+                <p id="present">0</p>
+            </div>
+            <div class="card card-absent">
+                <h3>Absent Today</h3>
+                <p id="absent">0</p>
+            </div>
+        </section>
+
+        <!-- 1. Trainee Registration Section (Roll, Name, Trade + Biometric) -->
+        <section class="form-section">
+            <h2>1. Trainee Registration (with Fingerprint)</h2>
+            <div class="input-group">
+                <input type="text" id="roll" placeholder="Roll Number">
+                <input type="text" id="name" placeholder="Trainee Name">
+                <input type="text" id="trade" placeholder="Trade (e.g. COPA, Electrician)">
+                <button onclick="registerStudentWithFingerprint()" style="background-color: #28a745;">
+                    ☝️ Scan Finger & Register
+                </button>
+            </div>
+            <p id="regStatus" style="margin-top: 8px; font-weight: bold;"></p>
+        </section>
+
+        <!-- 2. Daily Attendance Verification & Table Section -->
+        <section class="attendance-section">
+            <h2>2. Daily Attendance Verification</h2>
+            <div class="date-picker" style="align-items: center; gap: 15px;">
+                <label for="attendanceDate">Select Date:</label>
+                <input type="date" id="attendanceDate" onchange="loadTodayAttendance()">
+                
+                <button onclick="verifyAndMarkAttendance()" class="btn-biometric" style="background-color: #007bff; padding: 10px 20px;">
+                    🖐️ Touch Scanner to Mark Attendance
+                </button>
+            </div>
+
+            <!-- Attendance Table with Trade, Remark, and Actions -->
+            <div class="table-wrap" style="margin-top: 15px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Roll No.</th>
+                            <th>Trainee Name</th>
+                            <th>Trade</th>
+                            <th>Status</th>
+                            <th>Time</th>
+                            <th>Remark</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentList"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 3. Attendance Report Section -->
+        <section class="report-section">
+            <h2>3. Attendance Report</h2>
+            <div class="report-controls">
+                <div>
+                    <label for="reportMonth">Select Month:</label>
+                    <input type="month" id="reportMonth">
+                    <button onclick="showMonthlyReport()">Generate Monthly Report</button>
+                </div>
+                <div class="action-btns">
+                    <button onclick="showReport()">Overall Report</button>
+                    <button class="btn-download" onclick="downloadCSV()">Download CSV</button>
+                </div>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Roll No.</th>
+                            <th>Trainee Name</th>
+                            <th>Trade</th>
+                            <th>Present Days</th>
+                            <th>Total Marked Days</th>
+                            <th>Percentage</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reportList"></tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <!-- Firebase Cloud SDK Module -->
+    <script type="module" src="script.js"></script>
+</body>
+</html>
